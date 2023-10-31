@@ -10,14 +10,14 @@
 bool Yaw::init() {
 
     // create our geometries
-	triangle.init();
-	triangle2.init();
+	//triangle.init();
+	//triangle2.init();
 
-    opengGLWindow1 = new TestMyGLFWWindow("Test OpenGl 1", 200,200);
-    opengGLWindow2 = new TestMyGLFWWindow("Test OpenGl 2", 200,200);
+    //opengGLWindow1 = new TestMyGLFWWindow("Test OpenGl 1", 200,200);
+    //opengGLWindow2 = new TestMyGLFWWindow("Test OpenGl 2", 200,200);
     
-    viewer.initializeGL();
-    viewer.resizeGL(width(), height());
+    //viewer.initializeGL();
+    //viewer.resizeGL(width(), height());
 
     return true;
 }
@@ -39,26 +39,25 @@ void Yaw::ui() {
     
     ImGui::End();
 
-    opengGLWindow1->ui();
-    opengGLWindow2->ui();
+    //opengGLWindow1->ui();
+    //opengGLWindow2->ui();
 }
 
 void Yaw::draw() {   
 
-    viewer.paintGL();
+    //viewer.paintGL();
     
-    triangle.draw();
-    triangle2.draw();
+    //triangle.draw();
+    //triangle2.draw();
     
-    opengGLWindow1->draw();
-    opengGLWindow2->draw();
+    //opengGLWindow1->draw();
+    //opengGLWindow2->draw();
 }
 
 void Yaw::update() {
-    viewer.update();
-    
-    opengGLWindow1->update();
-    opengGLWindow2->update();
+    //viewer.update();
+    //opengGLWindow1->update();
+    //opengGLWindow2->update();
 }
 
 
