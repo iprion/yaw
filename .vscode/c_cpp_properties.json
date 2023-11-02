@@ -5,7 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/../imgui/**",
-                "${workspaceFolder}/../glfw/include/**",
+                "${workspaceFolder}/../glfw/include/**"
             ],
             "defines": [],
             "macFrameworkPath": [
