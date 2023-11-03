@@ -4,8 +4,8 @@
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_vulkan.h"
 
-#include "mainwindow.h"
-#include "device.h"
+#include "mainwindow.hpp"
+#include "vulkan/device.hpp"
 
 #include <string>
 
@@ -15,6 +15,7 @@ public :
     Application(const std::string& appName, unsigned int width, unsigned int height, bool dark);
     ~Application();
 
+    Device& device() { return device_; };
     void run();
 
 protected:
@@ -37,7 +38,7 @@ private :
 
 private :
     MainWindow mainWindow;
-    Device device;
+    Device device_;
     ImGui_ImplVulkanH_Window vulkanWindow;
 
     ImVec4 clear_color;    

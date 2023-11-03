@@ -1,5 +1,5 @@
 
-#include "framebuffer.h"
+#include "framebuffer.hpp"
 #include <fstream>
 #include <sstream>
 #include <iostream>

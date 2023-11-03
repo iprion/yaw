@@ -1,5 +1,5 @@
-#ifndef FORMAT_H
-#define FORMAT_H
+#pragma once
+
 
 #include <sstream>
 
@@ -33,5 +33,3 @@ namespace std {
         return oss.str();
     }
 }
-
-#endif

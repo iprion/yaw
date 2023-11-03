@@ -1,10 +1,9 @@
-#ifndef YAW_H
-#define YAW_H
+#pragma once
 
-#include "application/application.h"
-#include "application/subwindow.h"
-#include "opengl/triangle.h"
-#include "YawGLViewer.h" 
+#include "application/application.hpp"
+#include "application/subwindow.hpp"
+#include "vulkan/triangle.hpp"
+#include "yawglviewer.hpp" 
 
 class Yaw : public Application {
 
@@ -29,5 +28,3 @@ private :
   YawGLViewer viewer;
 
 };
-
-#endif

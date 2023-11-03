@@ -1,8 +1,9 @@
-#include "subwindow.h"
+#include "subwindow.hpp"
 #include "imgui.h"
 #include <iostream>
 
-SubWindow::SubWindow(const std::string& name, unsigned int w, unsigned int h) {
+SubWindow::SubWindow(Device& device, const std::string& name, unsigned int w, unsigned int h) 
+: device(device) {
     framebuffer.create(w, h);
     width = w; 
     height = h;
@@ -48,10 +49,10 @@ void SubWindow::draw() {
     // now we can bind our framebuffer
     framebuffer.bind();
     
-    glViewport(0, 0, width, height);
+    //glViewport(0, 0, width, height);
 
-    glClearColor(0.0f,0.0f,0.0f,1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);  
+    //glClearColor(0.0f,0.0f,0.0f,1.0f);
+    //glClear(GL_COLOR_BUFFER_BIT);  
 
     // and we render our triangle as before
     drawGL();

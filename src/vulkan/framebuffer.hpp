@@ -1,7 +1,4 @@
-#ifndef framebuffer_hpp
-#define framebuffer_hpp
-
-#include <GL/glew.h>
+#pragma once
 
 #include <string>
 #include <vector>
@@ -17,11 +14,9 @@ public:
 	void* texture() const;
 
 private:
-    GLuint fbo;
-    GLuint rbo;
-    GLuint textureId;
- 	GLuint width;
-    GLuint height;
+    u_int32_t fbo;
+    u_int32_t rbo;
+    u_int32_t textureId;
+ 	u_int32_t width;
+    u_int32_t height;
 };
-
-#endif /* opengl_shader_hpp */

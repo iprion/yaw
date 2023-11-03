@@ -10,7 +10,7 @@ public :
     Device(std::vector<const char*> requiredExtensions);
     ~Device();
     static void check_vk_result(VkResult err);
-
+    VkDevice device() { return g_Device; };
 
 protected:
     virtual void ui() {};

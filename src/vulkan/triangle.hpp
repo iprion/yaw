@@ -1,13 +1,11 @@
-#ifndef triangle_hpp
-#define triangle_hpp
+#pragma once
 
-#include "shader.h"
-#include <GL/glew.h> 
+#include "shader.hpp"
 
 class Triangle
 {
 public:
-	Triangle();
+	Triangle(Device& device);
 	void init();
 	void draw();
 	template<typename T> void setUniform(const std::string& name, T val) { shader.setUniform(name, val); };
@@ -18,7 +16,5 @@ private :
 
 private:
 	Shader shader;
-  	GLuint vbo, vao, ebo;
+  	u_int32_t vbo, vao, ebo;
 };
-
-#endif /* opengl_shader_hpp */

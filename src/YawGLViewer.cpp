@@ -1,6 +1,4 @@
-#include "YawGLViewer.h"
-#include "backends/imgui_impl_glfw.h"
-#include "backends/imgui_impl_opengl3.h"
+#include "yawglviewer.hpp"
 
 void YawGLViewer::init() {
     setAxisIsDrawn(true);

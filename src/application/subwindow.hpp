@@ -1,11 +1,12 @@
 #pragma once
 
-#include "opengl/framebuffer.h"
+#include "vulkan/framebuffer.hpp"
+#include "vulkan/device.hpp"
 
 class SubWindow {
 
 public :
-    SubWindow(const std::string& name, unsigned int w, unsigned int h);
+    SubWindow(Device& device, const std::string& name, unsigned int w, unsigned int h);
     bool ui();
     void draw();
     virtual void update() {};
@@ -20,4 +21,5 @@ private :
   unsigned int height;
   std::string windowName;
   bool isInitialized;
+  Device& device;
 };

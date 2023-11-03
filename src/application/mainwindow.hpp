@@ -6,7 +6,7 @@
 
 #include <string>
 
-#include "device.h"
+#include "vulkan/device.hpp"
 
 class MainWindow {
 

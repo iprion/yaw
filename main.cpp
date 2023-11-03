@@ -1,6 +1,6 @@
 #define GL_SILENCE_DEPRECATION
 
-#include "yaw.h"
+#include "yaw.hpp"
 
 int main(int, char**)
 {

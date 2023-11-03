@@ -1,12 +1,12 @@
-#include "application.h"
+#include "application.hpp"
 
-#include "utils/format.h"
+#include "utils/format.hpp"
 #include <iostream>
 #include <vector>
 
 Application::Application(const std::string& appName, unsigned int width, unsigned int height, bool dark)
     : mainWindow(appName, width,height),
-      device(mainWindow.requiredExtensions()) {
+      device_(mainWindow.requiredExtensions()) {
 
     SetupVulkanWindow(mainWindow.width(), mainWindow.height());
 
@@ -26,18 +26,18 @@ Application::Application(const std::string& appName, unsigned int width, unsigne
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForVulkan(mainWindow.window(), true);
     ImGui_ImplVulkan_InitInfo init_info = {};
-    init_info.Instance = device.g_Instance;
-    init_info.PhysicalDevice = device.g_PhysicalDevice;
-    init_info.Device = device.g_Device;
-    init_info.QueueFamily = device.g_QueueFamily;
-    init_info.Queue = device.g_Queue;
-    init_info.PipelineCache = device.g_PipelineCache;
-    init_info.DescriptorPool = device.g_DescriptorPool;
+    init_info.Instance = device_.g_Instance;
+    init_info.PhysicalDevice = device_.g_PhysicalDevice;
+    init_info.Device = device_.g_Device;
+    init_info.QueueFamily = device_.g_QueueFamily;
+    init_info.Queue = device_.g_Queue;
+    init_info.PipelineCache = device_.g_PipelineCache;
+    init_info.DescriptorPool = device_.g_DescriptorPool;
     init_info.Subpass = 0;
-    init_info.MinImageCount = device.g_MinImageCount;
+    init_info.MinImageCount = device_.g_MinImageCount;
     init_info.ImageCount = vulkanWindow.ImageCount;
     init_info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
-    init_info.Allocator = device.g_Allocator;
+    init_info.Allocator = device_.g_Allocator;
     init_info.CheckVkResultFn = Device::check_vk_result;
     ImGui_ImplVulkan_Init(&init_info, vulkanWindow.RenderPass);
 
@@ -63,7 +63,7 @@ Application::Application(const std::string& appName, unsigned int width, unsigne
         VkCommandPool command_pool = vulkanWindow.Frames[vulkanWindow.FrameIndex].CommandPool;
         VkCommandBuffer command_buffer = vulkanWindow.Frames[vulkanWindow.FrameIndex].CommandBuffer;
 
-        VkResult err = vkResetCommandPool(device.g_Device, command_pool, 0);
+        VkResult err = vkResetCommandPool(device_.g_Device, command_pool, 0);
         Device::check_vk_result(err);
         VkCommandBufferBeginInfo begin_info = {};
         begin_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
@@ -79,10 +79,10 @@ Application::Application(const std::string& appName, unsigned int width, unsigne
         end_info.pCommandBuffers = &command_buffer;
         err = vkEndCommandBuffer(command_buffer);
         Device::check_vk_result(err);
-        err = vkQueueSubmit(device.g_Queue, 1, &end_info, VK_NULL_HANDLE);
+        err = vkQueueSubmit(device_.g_Queue, 1, &end_info, VK_NULL_HANDLE);
         Device::check_vk_result(err);
 
-        err = vkDeviceWaitIdle(device.g_Device);
+        err = vkDeviceWaitIdle(device_.g_Device);
         Device::check_vk_result(err);
         ImGui_ImplVulkan_DestroyFontUploadObjects();
     }
@@ -102,13 +102,13 @@ Application::~Application() {
 // Your real engine/app may not use them.
 void Application::SetupVulkanWindow(int width, int height)
 {
-    VkSurfaceKHR surface = mainWindow.createSurface(device);
+    VkSurfaceKHR surface = mainWindow.createSurface(device_);
  
     vulkanWindow.Surface = surface;
 
     // Check for WSI support
     VkBool32 res;
-    vkGetPhysicalDeviceSurfaceSupportKHR(device.g_PhysicalDevice, device.g_QueueFamily, vulkanWindow.Surface, &res);
+    vkGetPhysicalDeviceSurfaceSupportKHR(device_.g_PhysicalDevice, device_.g_QueueFamily, vulkanWindow.Surface, &res);
     if (res != VK_TRUE)
     {
         fprintf(stderr, "Error no WSI support on physical device 0\n");
@@ -118,7 +118,7 @@ void Application::SetupVulkanWindow(int width, int height)
     // Select Surface Format
     const VkFormat requestSurfaceImageFormat[] = { VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_R8G8B8A8_UNORM, VK_FORMAT_B8G8R8_UNORM, VK_FORMAT_R8G8B8_UNORM };
     const VkColorSpaceKHR requestSurfaceColorSpace = VK_COLORSPACE_SRGB_NONLINEAR_KHR;
-    vulkanWindow.SurfaceFormat = ImGui_ImplVulkanH_SelectSurfaceFormat(device.g_PhysicalDevice, vulkanWindow.Surface, requestSurfaceImageFormat, (size_t)IM_ARRAYSIZE(requestSurfaceImageFormat), requestSurfaceColorSpace);
+    vulkanWindow.SurfaceFormat = ImGui_ImplVulkanH_SelectSurfaceFormat(device_.g_PhysicalDevice, vulkanWindow.Surface, requestSurfaceImageFormat, (size_t)IM_ARRAYSIZE(requestSurfaceImageFormat), requestSurfaceColorSpace);
 
     // Select Present Mode
 #ifdef IMGUI_UNLIMITED_FRAME_RATE
@@ -126,18 +126,18 @@ void Application::SetupVulkanWindow(int width, int height)
 #else
     VkPresentModeKHR present_modes[] = { VK_PRESENT_MODE_FIFO_KHR };
 #endif
-    vulkanWindow.PresentMode = ImGui_ImplVulkanH_SelectPresentMode(device.g_PhysicalDevice, vulkanWindow.Surface, &present_modes[0], IM_ARRAYSIZE(present_modes));
+    vulkanWindow.PresentMode = ImGui_ImplVulkanH_SelectPresentMode(device_.g_PhysicalDevice, vulkanWindow.Surface, &present_modes[0], IM_ARRAYSIZE(present_modes));
     //printf("[vulkan] Selected PresentMode = %d\n", vulkanWindow.PresentMode);
 
     // Create SwapChain, RenderPass, Framebuffer, etc.
-    IM_ASSERT(device.g_MinImageCount >= 2);
-    ImGui_ImplVulkanH_CreateOrResizeWindow(device.g_Instance, device.g_PhysicalDevice, device.g_Device, &vulkanWindow, device.g_QueueFamily, device.g_Allocator, width, height, device.g_MinImageCount);
+    IM_ASSERT(device_.g_MinImageCount >= 2);
+    ImGui_ImplVulkanH_CreateOrResizeWindow(device_.g_Instance, device_.g_PhysicalDevice, device_.g_Device, &vulkanWindow, device_.g_QueueFamily, device_.g_Allocator, width, height, device_.g_MinImageCount);
 }
 
 
 void Application::CleanupVulkanWindow()
 {
-    ImGui_ImplVulkanH_DestroyWindow(device.g_Instance, device.g_Device, &vulkanWindow, device.g_Allocator);
+    ImGui_ImplVulkanH_DestroyWindow(device_.g_Instance, device_.g_Device, &vulkanWindow, device_.g_Allocator);
 }
 
 void Application::FrameRender(ImDrawData* draw_data)
@@ -146,24 +146,24 @@ void Application::FrameRender(ImDrawData* draw_data)
 
     VkSemaphore image_acquired_semaphore  = vulkanWindow.FrameSemaphores[vulkanWindow.SemaphoreIndex].ImageAcquiredSemaphore;
     VkSemaphore render_complete_semaphore = vulkanWindow.FrameSemaphores[vulkanWindow.SemaphoreIndex].RenderCompleteSemaphore;
-    err = vkAcquireNextImageKHR(device.g_Device, vulkanWindow.Swapchain, UINT64_MAX, image_acquired_semaphore, VK_NULL_HANDLE, &vulkanWindow.FrameIndex);
+    err = vkAcquireNextImageKHR(device_.g_Device, vulkanWindow.Swapchain, UINT64_MAX, image_acquired_semaphore, VK_NULL_HANDLE, &vulkanWindow.FrameIndex);
     if (err == VK_ERROR_OUT_OF_DATE_KHR || err == VK_SUBOPTIMAL_KHR)
     {
-        device.g_SwapChainRebuild = true;
+        device_.g_SwapChainRebuild = true;
         return;
     }
     Device::check_vk_result(err);
 
     ImGui_ImplVulkanH_Frame* fd = &vulkanWindow.Frames[vulkanWindow.FrameIndex];
     {
-        err = vkWaitForFences(device.g_Device, 1, &fd->Fence, VK_TRUE, UINT64_MAX);    // wait indefinitely instead of periodically checking
+        err = vkWaitForFences(device_.g_Device, 1, &fd->Fence, VK_TRUE, UINT64_MAX);    // wait indefinitely instead of periodically checking
         Device::check_vk_result(err);
 
-        err = vkResetFences(device.g_Device, 1, &fd->Fence);
+        err = vkResetFences(device_.g_Device, 1, &fd->Fence);
         Device::check_vk_result(err);
     }
     {
-        err = vkResetCommandPool(device.g_Device, fd->CommandPool, 0);
+        err = vkResetCommandPool(device_.g_Device, fd->CommandPool, 0);
         Device::check_vk_result(err);
         VkCommandBufferBeginInfo info = {};
         info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
@@ -202,14 +202,14 @@ void Application::FrameRender(ImDrawData* draw_data)
 
         err = vkEndCommandBuffer(fd->CommandBuffer);
         Device::check_vk_result(err);
-        err = vkQueueSubmit(device.g_Queue, 1, &info, fd->Fence);
+        err = vkQueueSubmit(device_.g_Queue, 1, &info, fd->Fence);
         Device::check_vk_result(err);
     }
 }
 
 void Application::FramePresent()
 {
-    if (device.g_SwapChainRebuild)
+    if (device_.g_SwapChainRebuild)
         return;
     VkSemaphore render_complete_semaphore = vulkanWindow.FrameSemaphores[vulkanWindow.SemaphoreIndex].RenderCompleteSemaphore;
     VkPresentInfoKHR info = {};
@@ -219,10 +219,10 @@ void Application::FramePresent()
     info.swapchainCount = 1;
     info.pSwapchains = &vulkanWindow.Swapchain;
     info.pImageIndices = &vulkanWindow.FrameIndex;
-    VkResult err = vkQueuePresentKHR(device.g_Queue, &info);
+    VkResult err = vkQueuePresentKHR(device_.g_Queue, &info);
     if (err == VK_ERROR_OUT_OF_DATE_KHR || err == VK_SUBOPTIMAL_KHR)
     {
-        device.g_SwapChainRebuild = true;
+        device_.g_SwapChainRebuild = true;
         return;
     }
     Device::check_vk_result(err);
@@ -232,17 +232,17 @@ void Application::FramePresent()
 void Application::newFrame() {
 
     // Resize swap chain?
-    if (device.g_SwapChainRebuild)
+    if (device_.g_SwapChainRebuild)
     {
         int width = mainWindow.width();
         int height = mainWindow.height();
         glfwGetFramebufferSize(mainWindow.window(), &width, &height);
         if (width > 0 && height > 0)
         {
-            ImGui_ImplVulkan_SetMinImageCount(device.g_MinImageCount);
-            ImGui_ImplVulkanH_CreateOrResizeWindow(device.g_Instance, device.g_PhysicalDevice, device.g_Device, &vulkanWindow, device.g_QueueFamily, device.g_Allocator, width, height, device.g_MinImageCount);
+            ImGui_ImplVulkan_SetMinImageCount(device_.g_MinImageCount);
+            ImGui_ImplVulkanH_CreateOrResizeWindow(device_.g_Instance, device_.g_PhysicalDevice, device_.g_Device, &vulkanWindow, device_.g_QueueFamily, device_.g_Allocator, width, height, device_.g_MinImageCount);
             vulkanWindow.FrameIndex = 0;
-            device.g_SwapChainRebuild = false;
+            device_.g_SwapChainRebuild = false;
         }
     }
 

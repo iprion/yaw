@@ -1,6 +1,6 @@
-#include "mainwindow.h"
+#include "mainwindow.hpp"
 
-#include "utils/format.h"
+#include "utils/format.hpp"
 #include <iostream>
 
 #include <stdexcept>

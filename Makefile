@@ -10,7 +10,7 @@ SOURCES += $(IMGUI_DIR)/backends/imgui_impl_glfw.cpp $(IMGUI_DIR)/backends/imgui
 SOURCES += $(wildcard src/*.cpp)
 SOURCES += $(wildcard src/trackball/*.cpp)
 SOURCES += $(wildcard src/application/*.cpp)
-SOURCES += $(wildcard src/opengl/*.cpp)
+SOURCES += $(wildcard src/vulkan/*.cpp)
 SOURCES += $(wildcard src/utils/*.cpp)
 OBJDIR = obj
 OBJS = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(basename $(notdir $(SOURCES)))))
@@ -63,7 +63,7 @@ $(OBJDIR)/%.o:src/application/%.cpp
 $(OBJDIR)/%.o:src/utils/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-$(OBJDIR)/%.o:src/opengl/%.cpp
+$(OBJDIR)/%.o:src/vulkan/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 $(OBJDIR)/%.o:src/trackball/%.cpp

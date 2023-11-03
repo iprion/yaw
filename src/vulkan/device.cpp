@@ -1,6 +1,6 @@
-#include "device.h"
+#include "device.hpp"
 
-#include "utils/format.h"
+#include "utils/format.hpp"
 #include <iostream>
 #include <assert.h>
 #include <vector>

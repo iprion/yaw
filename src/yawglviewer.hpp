@@ -1,5 +1,4 @@
-#ifndef YAW2_H
-#define YAW2_H
+#pragma once
 
 #include "trackball/qglviewer.h"
 
@@ -12,4 +11,3 @@ public:
 
 };
 
-#endif

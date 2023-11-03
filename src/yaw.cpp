@@ -1,15 +1,12 @@
-#include "yaw.h"
-#include "backends/imgui_impl_glfw.h"
-#include "backends/imgui_impl_opengl3.h"
-
-#include <GL/glew.h> 
-#include <GLFW/glfw3.h>
-#include "TestMyGLFWWindow.h"
+#include "yaw.hpp"
+#include "testsubwindow.hpp"
 #include <iostream>
 
 
 Yaw::Yaw(const std::string& appName, unsigned int width, unsigned int height, bool dark)
-    : Application(appName, width,height, dark) {
+    : Application(appName, width,height, dark),
+    triangle(device()),
+    triangle2(device()) {
 
 }
 
@@ -19,8 +16,8 @@ bool Yaw::init() {
 	//triangle.init();
 	//triangle2.init();
 
-    //opengGLWindow1 = new TestMyGLFWWindow("Test OpenGl 1", 200,200);
-    //opengGLWindow2 = new TestMyGLFWWindow("Test OpenGl 2", 200,200);
+    //opengGLWindow1 = new TestSubWindow("Test OpenGl 1", 200,200);
+    //opengGLWindow2 = new TestSubWindow("Test OpenGl 2", 200,200);
     
     //viewer.initializeGL();
     //viewer.resizeGL(width(), height());
