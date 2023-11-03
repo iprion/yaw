@@ -7,6 +7,12 @@
 #include "TestMyGLFWWindow.h"
 #include <iostream>
 
+
+Yaw::Yaw(const std::string& appName, unsigned int width, unsigned int height, bool dark)
+    : Application(appName, width,height, dark) {
+
+}
+
 bool Yaw::init() {
 
     // create our geometries

@@ -1,11 +1,15 @@
 #ifndef YAW_H
 #define YAW_H
 
-#include "application/ImGuiGLFWApp.h"
-#include "application/ImGuiGLFWWindow.h"
+#include "application/application.h"
+#include "application/subwindow.h"
 #include "opengl/triangle.h"
 #include "YawGLViewer.h" 
-class Yaw : public ImGuiGLFWApp {
+
+class Yaw : public Application {
+
+public:
+  Yaw(const std::string& appName, unsigned int width, unsigned int height, bool dark);
 
 protected:
     virtual void ui();
@@ -20,8 +24,8 @@ private :
   //float rotation = 0.0;
   //float translation[2] = {0.0, 0.0};    
   //float color[4] = { 1.0f,1.0f,1.0f,1.0f };
-  ImGuiGLFWWindow * opengGLWindow1;
-  ImGuiGLFWWindow * opengGLWindow2;
+  SubWindow * opengGLWindow1;
+  SubWindow * opengGLWindow2;
   YawGLViewer viewer;
 
 };

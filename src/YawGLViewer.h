@@ -2,7 +2,6 @@
 #define YAW2_H
 
 #include "trackball/qglviewer.h"
-#include "imgui.h"
 
 class YawGLViewer : public QGLViewer {
 

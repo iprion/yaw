@@ -1,13 +1,11 @@
-#ifndef IMGUI_GLFW_WINDOW_H
-#define IMGUI_GLFW_WINDOW_H
+#pragma once
 
 #include "opengl/framebuffer.h"
 
-
-class ImGuiGLFWWindow {
+class SubWindow {
 
 public :
-    ImGuiGLFWWindow(const std::string& name, unsigned int w, unsigned int h);
+    SubWindow(const std::string& name, unsigned int w, unsigned int h);
     bool ui();
     void draw();
     virtual void update() {};
@@ -23,6 +21,3 @@ private :
   std::string windowName;
   bool isInitialized;
 };
-
-
-#endif

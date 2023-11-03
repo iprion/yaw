@@ -4,14 +4,9 @@
 
 int main(int, char**)
 {
-    Yaw app;
-
-    if (!app.build("Yet Another Wheel", 1280, 720, true))
-        return 1;
+    Yaw app("Yet Another Wheel", 1280, 720, true);
     
-    app.start();
-
-    app.shutdown();
+    app.run();
 
     return 0;
 }

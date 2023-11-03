@@ -2,7 +2,7 @@
 #include <iostream>
 
 TestMyGLFWWindow::TestMyGLFWWindow(const std::string& name, unsigned int w, unsigned int h) :
-    ImGuiGLFWWindow(name,w,h) {
+    SubWindow(name,w,h) {
 
 }
 

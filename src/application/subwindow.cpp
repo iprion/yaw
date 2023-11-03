@@ -1,8 +1,8 @@
-#include "ImGuiGLFWWindow.h"
+#include "subwindow.h"
 #include "imgui.h"
 #include <iostream>
 
-ImGuiGLFWWindow::ImGuiGLFWWindow(const std::string& name, unsigned int w, unsigned int h) {
+SubWindow::SubWindow(const std::string& name, unsigned int w, unsigned int h) {
     framebuffer.create(w, h);
     width = w; 
     height = h;
@@ -10,7 +10,7 @@ ImGuiGLFWWindow::ImGuiGLFWWindow(const std::string& name, unsigned int w, unsign
     isInitialized = false;
 }
 
-bool ImGuiGLFWWindow::ui() {
+bool SubWindow::ui() {
 
     if (!isInitialized) {
         if (!init())
@@ -43,7 +43,7 @@ bool ImGuiGLFWWindow::ui() {
     return true;
 }
 
-void ImGuiGLFWWindow::draw() {
+void SubWindow::draw() {
 
     // now we can bind our framebuffer
     framebuffer.bind();
