@@ -40,10 +40,4 @@ private :
     MainWindow mainWindow;
     Device device_;
     ImGui_ImplVulkanH_Window vulkanWindow;
-
-    ImVec4 clear_color;    
-    ImGuiIO* io;
-
 };
-
-

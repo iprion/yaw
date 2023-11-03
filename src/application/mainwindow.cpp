@@ -60,14 +60,6 @@ std::vector<const char*>  MainWindow::requiredExtensions() {
     return extensions;
 }
 
-void MainWindow::clear() {
- //   glClearColor(0.45f, 0.55f,0.60f,1.00f);
- //   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-void MainWindow::updateViewPort() {
-     //glViewport(0, 0, width(), height());    
-}
 
 void MainWindow::events() {
      glfwPollEvents();
@@ -83,6 +75,16 @@ VkSurfaceKHR MainWindow::createSurface(const Device& device) {
     VkResult err = glfwCreateWindowSurface(device.g_Instance, mainWindow, device.g_Allocator, &surface);
     Device::check_vk_result(err);
     return surface;
+}
+
+
+void MainWindow::clear() {
+ //   glClearColor(0.45f, 0.55f,0.60f,1.00f);
+ //   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void MainWindow::updateViewPort() {
+     //glViewport(0, 0, width(), height());    
 }
 
 

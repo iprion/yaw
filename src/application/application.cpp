@@ -14,9 +14,9 @@ Application::Application(const std::string& appName, unsigned int width, unsigne
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    io = &ImGui::GetIO(); (void)io;
-    io->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    io->ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+    ImGuiIO& io = ImGui::GetIO(); 
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
   
     if (dark)
         ImGui::StyleColorsDark();
@@ -263,10 +263,10 @@ void Application::endFrame() {
     const bool is_minimized = (draw_data->DisplaySize.x <= 0.0f || draw_data->DisplaySize.y <= 0.0f);
     if (!is_minimized)
     {
-        vulkanWindow.ClearValue.color.float32[0] = clear_color.x * clear_color.w;
-        vulkanWindow.ClearValue.color.float32[1] = clear_color.y * clear_color.w;
-        vulkanWindow.ClearValue.color.float32[2] = clear_color.z * clear_color.w;
-        vulkanWindow.ClearValue.color.float32[3] = clear_color.w;
+        vulkanWindow.ClearValue.color.float32[0] = 0;
+        vulkanWindow.ClearValue.color.float32[1] = 0;
+        vulkanWindow.ClearValue.color.float32[2] = 0;
+        vulkanWindow.ClearValue.color.float32[3] = 0;
         FrameRender(draw_data);
         FramePresent();
     }
